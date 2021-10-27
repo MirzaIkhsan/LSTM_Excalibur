@@ -10,5 +10,5 @@ class Forget():
     def _sigmoid(self, number):
         return 1/(1+math.exp(-number))
 
-    def score(x, h_prev):
-        return self._sigmoid(np.matmul(self.U, x) + np.matmul(self.W, h_pref) + self.bias)
+    def score(self, x, h_prev):
+        return self._sigmoid(np.matmul(self.U, x) + np.matmul(self.W, h_prev) + self.bias)
