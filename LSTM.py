@@ -1,7 +1,5 @@
 import numpy as np
 from numpy import random
-from numpy.core.defchararray import add
-from numpy.core.fromnumeric import reshape
 
 
 class LSTM:
