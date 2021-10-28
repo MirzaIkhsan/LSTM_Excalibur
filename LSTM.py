@@ -1,6 +1,8 @@
 import numpy as np
 from numpy import random
 
+from ActivationFunction import ActivationFunction
+
 
 class LSTM:
     def __init__(self, units, activation='tanh', input_shape=None) -> None:
@@ -13,6 +15,7 @@ class LSTM:
         if(units == 0):
             raise Exception('Units can\'t be zero')
 
+        self.type = 'LSTM'
         self.units = units
         self.input_shape = input_shape
         self.activation = activation
@@ -69,10 +72,14 @@ class LSTM:
             .reshape(shape)
 
     def process_timestep(self, data):
-        for each_unit in range(self.units):
+        for _ in range(self.units):
             input = self.hidden_state + data
-            
-        pass
+            # input_gate = ActivationFunction.sigmoid(input)
+            # self.cell_state = self.cell_state * input_gate
+            # forget_gate = input_gate * np.tanh(input)
+            # self.cell_state += forget_gate
+            # output_gate = input_gate * np.tanh(self.cell_state)
+        # return self.cell_state, output_gate
 
     def forward(self, input):
         if(type(input) is not np.ndarray):
@@ -83,11 +90,8 @@ class LSTM:
                 'The input shape is not the same as the shape of the input')
 
         for each_row_idx in range(len(input)):
-
-            for each_unit in range(self.units):
-
-                pass
-            pass
+            res = self.process_timestep(input[each_row_idx])
+            print(res)
 
 
 if __name__ == "__main__":
