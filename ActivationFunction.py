@@ -21,6 +21,9 @@ class ActivationFunction:
             res.append(1 / (1 + np.exp(-items)))
         return res
 
+    def sigmoid_num(number):
+        return 1 / (1 + np.exp(-number))
+
     @staticmethod
     def relu(net):
         '''

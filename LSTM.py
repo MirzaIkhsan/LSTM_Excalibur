@@ -1,5 +1,6 @@
 import numpy as np
 from numpy import random
+from Cell import Cell
 
 from ActivationFunction import ActivationFunction
 
@@ -62,6 +63,13 @@ class LSTM:
             shape=(self.units, self.units)
         )
 
+        self.cells = []
+        for i in range(self.units):
+            self.cells.append(Cell(self.Uf[i], self.Wf[i],
+                                    self.Ui[i], self.Wi[i],
+                                    self.Uc[i], self.Wc[i],
+                                    self.Uo[i], self.Wo[i]))
+
     def _random_init(self, n_range, shape, add_bias=False):
         if(add_bias):
             return np.array([random.uniform(0, 1)
@@ -72,8 +80,10 @@ class LSTM:
             .reshape(shape)
 
     def process_timestep(self, data):
-        for _ in range(self.units):
-            input = self.hidden_state + data
+        for cell in self.cells:
+            cell.calculate_cell(data)
+            cell.calculate_hidden()
+            #input = self.hidden_state + data
             # input_gate = ActivationFunction.sigmoid(input)
             # self.cell_state = self.cell_state * input_gate
             # forget_gate = input_gate * np.tanh(input)
@@ -91,18 +101,20 @@ class LSTM:
 
         for each_row_idx in range(len(input)):
             res = self.process_timestep(input[each_row_idx])
-            print(res)
+
+            if (each_row_idx == len(input)-1):
+                print(res)
 
 
 if __name__ == "__main__":
     input = np.arange(0, 100).reshape(50, 2)
 
     lstm = LSTM(1, input_shape=(50, 2))
-    # lstm.forward(input)
+    lstm.forward(input)
     # print(input[0])
-    lstm.process_timestep(input[0])
+    #lstm.process_timestep(input[0])
 
-    print(lstm.Uf)
-    print(lstm.Wf)
+    #print(lstm.Uf)
+    #print(lstm.Wf)
 
     pass

@@ -2,17 +2,17 @@ import numpy as np
 from ActivationFunction import ActivationFunction
 
 class Output():
-  def __init__(self, U, W, ct, bias=1):
+  def __init__(self, U, W, bias=1):
     self.U = U
     self.W = W
-    self.ct = ct
+    #self.ct = ct
     self.bias = bias
     
   def ot(self, x, h_prev):
     self.ot = ActivationFunction.sigmoid(np.matmul(self.U, x.transpose()) + np.matmul(self.W, h_prev) + self.bias)
     return self.ot
 
-  def ht(self):
+  def ht(self, ct):
     self.ht = np.array([np.dot(self.ot, np.tanh(self.ct))])
     return self.ht
 

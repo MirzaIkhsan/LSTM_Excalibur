@@ -4,18 +4,24 @@ import numpy as np
 from ActivationFunction import ActivationFunction
 
 class InputGate():
-    def __init__(self, U, W, bi=1, bct=1):
-        self.U = U
-        self.W = W
+    def __init__(self, Ui, Wi, Uc, Wc, bi=1, bct=1):
+        self.Ui = Ui
+        self.Wi = Wi
+        self.Uc = Uc
+        self.Wc = Wc
         self.bi = bi
         self.bct = bct
 
     def it(self, x, h_prev):
-        self.it = ActivationFunction.sigmoid(np.matmul(self.U, x.transpose()) + np.matmul(self.W, h_prev) + self.bi)
+        res = np.matmul(self.Ui, x.transpose()) + np.matmul(self.Wi, h_prev) + self.bi
+        # if type(res) == np.float64:
+        #     print(res)
+        #     res = np.array(res)
+        self.it = ActivationFunction.sigmoid_num(res)
         return self.it
 
     def ct(self, x, h_prev):
-        self.ct = np.tanh(np.matmul(self.U, x.transpose()) + np.matmul(self.W, h_prev) + self.bct)
+        self.ct = np.tanh(np.matmul(self.Uc, x.transpose()) + np.matmul(self.Wc, h_prev) + self.bct)
         return self.ct
 
 
