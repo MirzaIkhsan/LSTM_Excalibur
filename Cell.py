@@ -23,10 +23,12 @@ class Cell:
 
     def calculate_cell(self, x):
         self.cell_state = np.dot(self.forget_gate.score(x, self.hidden), 
-                                self.cell_state) + np.dot(self.input_gate.it(x, self.hidden), 
-                                                        self.input_gate.ct(x, self.hidden))
+                                self.cell_state) + np.dot(self.input_gate.score_it(x, self.hidden), 
+                                                        self.input_gate.score_ct(x, self.hidden))
         
         return self.cell_state
 
-    def calculate_hidden():
-        pass
+    def calculate_hidden(self, x):
+        self.hidden = self.output.score_ht(self.cell_state, x, self.hidden)
+        
+        return self.hidden

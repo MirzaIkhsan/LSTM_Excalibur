@@ -82,14 +82,14 @@ class LSTM:
     def process_timestep(self, data):
         for cell in self.cells:
             cell.calculate_cell(data)
-            cell.calculate_hidden()
+            cell.calculate_hidden(data)
             #input = self.hidden_state + data
             # input_gate = ActivationFunction.sigmoid(input)
             # self.cell_state = self.cell_state * input_gate
             # forget_gate = input_gate * np.tanh(input)
             # self.cell_state += forget_gate
             # output_gate = input_gate * np.tanh(self.cell_state)
-        # return self.cell_state, output_gate
+        return self.cells
 
     def forward(self, input):
         if(type(input) is not np.ndarray):
@@ -103,14 +103,15 @@ class LSTM:
             res = self.process_timestep(input[each_row_idx])
 
             if (each_row_idx == len(input)-1):
-                print(res)
+                for cell in res:
+                    print(cell.hidden)
 
 
 if __name__ == "__main__":
-    input = np.arange(0, 100).reshape(50, 2)
+    input_data = np.arange(0, 100).reshape(50, 2)
 
     lstm = LSTM(1, input_shape=(50, 2))
-    lstm.forward(input)
+    lstm.forward(input_data)
     # print(input[0])
     #lstm.process_timestep(input[0])
 

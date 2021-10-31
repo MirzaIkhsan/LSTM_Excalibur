@@ -8,12 +8,12 @@ class Output():
     #self.ct = ct
     self.bias = bias
     
-  def ot(self, x, h_prev):
-    self.ot = ActivationFunction.sigmoid(np.matmul(self.U, x.transpose()) + np.matmul(self.W, h_prev) + self.bias)
+  def score_ot(self, x, h_prev):
+    self.ot = ActivationFunction.sigmoid_num(np.matmul(self.U, x.transpose()) + np.matmul(self.W, h_prev) + self.bias)
     return self.ot
 
-  def ht(self, ct):
-    self.ht = np.array([np.dot(self.ot, np.tanh(self.ct))])
+  def score_ht(self, ct, x, h_prev):
+    self.ht = np.array(np.dot(self.score_ot(x, h_prev), np.tanh(ct)))
     return self.ht
 
 if __name__ == "__main__":

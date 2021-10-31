@@ -12,15 +12,15 @@ class InputGate():
         self.bi = bi
         self.bct = bct
 
-    def it(self, x, h_prev):
+    def score_it(self, x, h_prev):
         res = np.matmul(self.Ui, x.transpose()) + np.matmul(self.Wi, h_prev) + self.bi
         # if type(res) == np.float64:
         #     print(res)
         #     res = np.array(res)
-        self.it = ActivationFunction.sigmoid_num(res)
+        self.it = np.array(ActivationFunction.sigmoid_num(res))
         return self.it
 
-    def ct(self, x, h_prev):
+    def score_ct(self, x, h_prev):
         self.ct = np.tanh(np.matmul(self.Uc, x.transpose()) + np.matmul(self.Wc, h_prev) + self.bct)
         return self.ct
 
