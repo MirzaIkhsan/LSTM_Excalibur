@@ -4,13 +4,13 @@ import numpy as np
 from ActivationFunction import ActivationFunction
 
 class InputGate():
-    def __init__(self, Ui, Wi, Uc, Wc, bi=1, bct=1):
+    def __init__(self, Ui, Wi, Uc, Wc, bi, bct):
         self.Ui = Ui
         self.Wi = Wi
         self.Uc = Uc
         self.Wc = Wc
-        self.bi = bi
-        self.bct = bct
+        self.bi = np.array([[bi]])
+        self.bct = np.array([[bct]])
 
     def score_it(self, x, h_prev):
         res = np.matmul(self.Ui, x.transpose()) + np.matmul(self.Wi, h_prev) + self.bi
@@ -26,12 +26,14 @@ class InputGate():
 
 
 if __name__ == "__main__":
-    xt = np.array([1, 2])
-    ui = np.array([0.6, 0.4])
-    wi = np.array([0.25])
-    h_prev = np.array([0])
-    bi = np.array([0.1])
-    bct = np.array([0.1])
-    input_example = InputGate(ui, wi, bi, bct)
-    print("Input: ", input_example.it(xt, h_prev))
-    print("Candidate: ", input_example.ct(xt, h_prev))
+    xt = np.array([[1, 2]])
+    ui = np.array([[0.95, 0.8]])
+    wi = np.array([[0.8]])
+    uc = np.array([[0.45, 0.25]])
+    wc = np.array([[0.15]])
+    h_prev = np.array([[0]])
+    bi = 0.65
+    bct = 0.2
+    input_example = InputGate(ui, wi, uc, wc, bi, bct)
+    print("Input: ", input_example.score_it(xt, h_prev))
+    print("Candidate: ", input_example.score_ct(xt, h_prev))
