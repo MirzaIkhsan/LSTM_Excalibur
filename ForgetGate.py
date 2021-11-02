@@ -7,18 +7,14 @@ class ForgetGate():
     def __init__(self, U, W, bias):
         self.U = U
         self.W = W
-        self.bias = np.array([[bias]])
+        self.bias = bias
 
     def _sigmoid(self, number):
         #return ActivationFunction.sigmoid(number)
         return 1 / (1 + np.exp(-number))
 
     def score(self, x, h_prev):
-        # print("Haloo")
-        # print(self.U.shape)
-        # print("===================")
         self.value = np.array(self._sigmoid(np.matmul(self.U, x.transpose()) + np.matmul(self.W, h_prev) + self.bias))
-
         return self.value
 
 if __name__ == "__main__":

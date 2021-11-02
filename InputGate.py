@@ -9,8 +9,8 @@ class InputGate():
         self.Wi = Wi
         self.Uc = Uc
         self.Wc = Wc
-        self.bi = np.array([[bi]])
-        self.bct = np.array([[bct]])
+        self.bi = bi
+        self.bct = bct
 
     def score_it(self, x, h_prev):
         res = np.matmul(self.Ui, x.transpose()) + np.matmul(self.Wi, h_prev) + self.bi

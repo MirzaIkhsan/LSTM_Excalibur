@@ -5,7 +5,7 @@ class OutputGate():
   def __init__(self, U, W, bias):
     self.U = U
     self.W = W
-    self.bias = np.array([[bias]])
+    self.bias = bias
     
   def score_ot(self, x, h_prev):
     self.ot = ActivationFunction.sigmoid_num(np.matmul(self.U, x.transpose()) + np.matmul(self.W, h_prev) + self.bias)

@@ -9,17 +9,17 @@ class Cell:
                 Ui, Wi ,
                 Uc, Wc,
                 Uo, Wo,
-                bf = 1, 
-                bi = 1,
-                bct = 1,
-                bo = 1,
-                prev_cell_state = [0],
-                prev_hidden = [0]
+                prev_cell_state,
+                prev_hidden,
+                bf, 
+                bi,
+                bct,
+                bo,
                 ):
         self.forget_gate = ForgetGate(Uf, Wf, bf)
         self.input_gate = InputGate(Ui, Wi, Uc, Wc, bi, bct)
         self.prev_cell_state = prev_cell_state
-        self.output = OutputGate(Uo, Wo, bo)
+        self.output_gate = OutputGate(Uo, Wo, bo)
         self.prev_hidden = prev_hidden
 
     # def calculate_forget(self, U, W, bias):
@@ -32,16 +32,15 @@ class Cell:
         self.cell_state = np.dot(self.forget_gate.score(x, self.prev_hidden), 
                                 self.prev_cell_state) + np.dot(self.input_gate.score_it(x, self.prev_hidden), 
                                                         self.input_gate.score_ct(x, self.prev_hidden))
-        
         return self.cell_state
 
     def calculate_hidden(self, x):
-        self.hidden = self.output.score_ht(self.cell_state, x, self.prev_hidden)
+        self.hidden = self.output_gate.score_ht(self.cell_state, x, self.prev_hidden)
         
         return self.hidden
 
     def calculate_output(self, x):
-        self.output = self.output.score_ot(x, self.prev_hidden)
+        self.output = self.output_gate.score_ot(x, self.prev_hidden)
 
         return self.output
 
@@ -59,10 +58,10 @@ if __name__ == "__main__":
     uo = np.array([[0.6, 0.4]])
     wo = np.array([[0.25]])
     bo = 0.1
-    prev_cell_state = [[0]]
-    prev_hidden = [[0]]
+    prev_cell_state = np.array([[0]])
+    prev_hidden = np.array([[0]])
 
-    cell_example = Cell(uf, wf, ui, wi, uc, wc, uo, wo, bf, bi, bct, bo, prev_cell_state, prev_hidden)
+    cell_example = Cell(uf, wf, ui, wi, uc, wc, uo, wo, prev_cell_state, prev_hidden, bf, bi, bct, bo)
 
     print("Cell state: ", cell_example.calculate_cell(xt))
 
