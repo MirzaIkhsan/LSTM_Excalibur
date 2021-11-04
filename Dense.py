@@ -1,7 +1,6 @@
 import numpy as np
 import math
 from ActivationFunction import ActivationFunction
-from utils import paddMatrix
 
 class Dense:
     '''

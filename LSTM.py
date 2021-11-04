@@ -18,9 +18,10 @@ class LSTM:
         if(units == 0):
             raise Exception('Units can\'t be zero')
 
-        self.type = 'LSTM'
+        self.layerType = 'LSTM'
         self.units = units
         self.input_shape = input_shape
+        self.shape = (None, units)
         # self.activation = activation -> kita kyknya gk perlu pake activation ya soalnya udah automatis pake tanh dan sigmoid itu? yang di cellstatenya
         # self.cell_state = np.array([[0]])
         # self.hidden_state = np.array([[0]])
