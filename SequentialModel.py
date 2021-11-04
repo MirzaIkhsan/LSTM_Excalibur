@@ -303,6 +303,10 @@ class Sequential:
       elif (type(self.layers[i]) is LSTM):
         #TODO
         pass
+        # (m+n+1)*4*n
+        # n: unit LSTM
+        # m: dimensi input
+        weightTemp = (self.layers[i].units + self.layers[i].input_shape[1] + 1)* 4 * self.layers[i].units
       total_params += weightTemp  
       print("{:<30} {:<30} {:<30}".format(str(type(self.layers[i])), str(self.layers[i].shape), str(weightTemp)))
     print("Total params: ", total_params)

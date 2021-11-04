@@ -139,17 +139,17 @@ class LSTM:
             self.prev_hidden_state = np.array(hidden).reshape(self.units, 1)
             self.output_value = np.array(output_value).reshape(self.units, 1)
 
-            print("======Prev cell state========")
-            print(self.prev_cell_state)
-            print("======Prev hidden state======")
-            print(self.prev_hidden_state)
-            print("======Prev output============")
-            print(self.output_value)
+            # print("======Prev cell state========")
+            # print(self.prev_cell_state)
+            # print("======Prev hidden state======")
+            # print(self.prev_hidden_state)
+            # print("======Prev output============")
+            # print(self.output_value)
 
     def forward(self, data):
         self.process_timestep(data)
-        print("Output untuk dikasih ke Dense")
-        print(self.output_value)
+        # print("Output untuk dikasih ke Dense")
+        # print(self.output_value)
         return self.output_value        
     # def forward(self, input):
     #     if(type(input) is not np.ndarray):
