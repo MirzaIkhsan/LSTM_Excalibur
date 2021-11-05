@@ -108,7 +108,7 @@ class LSTM:
                                     Uci, Wci,
                                     Uoi, Woi, 
                                     prev_cell_state_i, self.prev_hidden_state, bfi,
-                                    bii, bcti, boi))
+                                    bii, bcti, boi, self.units))
 
     def _random_init(self, n_range, shape, add_bias=False):
         if(add_bias):
@@ -130,8 +130,8 @@ class LSTM:
             xi = data[i].reshape(1,data[i].shape[0])
             for j in range(self.units):
                 self.cells[j].calculate_cell(xi) 
+                output_value.append(self.cells[j].calculate_output(xi)[0][0]) #[0][0] karena hasilnya kan dalam shape (1,1) jadi ambil valuenya     caranya gini              
                 self.cells[j].calculate_hidden(xi)
-                output_value.append(self.cells[j].calculate_output(xi)[0][0]) #[0][0] karena hasilnya kan dalam shape (1,1) jadi ambil valuenya     caranya gini
 
             self.output_value = np.array(output_value).reshape(self.units, 1)
 

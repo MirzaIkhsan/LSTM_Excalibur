@@ -8,6 +8,8 @@ class OutputGate():
     self.bias = bias
     
   def score_ot(self, x, h_prev):
+    #print(self.W)
+    #print(h_prev.transpose())
     self.ot = ActivationFunction.sigmoid_num(np.matmul(self.U, x.transpose()) + np.matmul(self.W, h_prev) + self.bias)
 
     return self.ot

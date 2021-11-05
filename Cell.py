@@ -15,12 +15,14 @@ class Cell:
                 bi,
                 bct,
                 bo,
+                units
                 ):
         self.forget_gate = ForgetGate(Uf, Wf, bf)
         self.input_gate = InputGate(Ui, Wi, Uc, Wc, bi, bct)
-        self.prev_cell_state = prev_cell_state
+        self.cell_state = prev_cell_state
         self.output_gate = OutputGate(Uo, Wo, bo)
-        self.prev_hidden = prev_hidden
+        self.hidden = prev_hidden
+        self.units = units
 
     # def calculate_forget(self, U, W, bias):
     #     self.forget_gate.score()
@@ -29,18 +31,17 @@ class Cell:
     #     pass
 
     def calculate_cell(self, x):
-        self.cell_state = np.dot(self.forget_gate.score(x, self.prev_hidden), 
-                                self.prev_cell_state) + np.dot(self.input_gate.score_it(x, self.prev_hidden), 
-                                                        self.input_gate.score_ct(x, self.prev_hidden))
+        self.cell_state = np.dot(self.forget_gate.score(x, self.hidden), 
+                                self.cell_state) + np.dot(self.input_gate.score_it(x, self.hidden), 
+                                                        self.input_gate.score_ct(x, self.hidden))
         return self.cell_state
 
     def calculate_hidden(self, x):
-        self.hidden = self.output_gate.score_ht(self.cell_state, x, self.prev_hidden)
-        
+        self.hidden = np.array([self.output_gate.score_ht(self.cell_state, x, self.hidden) for _ in range(self.units)]).reshape((self.units,1))
         return self.hidden
 
     def calculate_output(self, x):
-        self.output = self.output_gate.score_ot(x, self.prev_hidden)
+        self.output = self.output_gate.score_ot(x, self.hidden)
 
         return self.output
 
