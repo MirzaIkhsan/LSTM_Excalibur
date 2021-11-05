@@ -22,6 +22,10 @@ class ActivationFunction:
         return res
 
     def sigmoid_num(number):
+        '''
+        Menghitung fungsi aktivasi sigmoid dengan menggunakan rumus
+        perhitungan logistik untuk satu number.
+        '''
         return 1 / (1 + np.exp(-number))
 
     @staticmethod
