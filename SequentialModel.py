@@ -1,21 +1,20 @@
 from Dense import Dense
 from Input import Input
-# from Flatten import Flatten
-# from Conv import Conv
-# from Pooling import Pooling
 from LSTM import LSTM
 import random
 import numpy as np
 import math
-# import utils
-# from utils import paddMatrix
 from ActivationFunction import ActivationFunction
 import re
 
 class Sequential:
   def __init__(self, layers=[]):
-    '''Sequential model constructor'''
-    
+    '''
+    Konstruktor untuk Sequential model.
+
+    Parameters:
+        layers (optional): layer yang akan dimasukkan dalam model.
+   '''
     self.layers = []
     if (len(layers) > 0):
       # Pushing layers in the param into stack.
@@ -24,11 +23,17 @@ class Sequential:
 
 
   def _get_layers_(self):
+    '''
+    Mendapatkan layer-layer dalam model.
+
+    Returns:
+        array of objects (layer dalam model).
+    '''
     return self.layers
 
   def add(self, layer):
     '''
-    Push a new layer into stack
+    Menambahkan layer baru pada stack.
     
     Restrictions:
     - First layer could only be LSTM or Input.
@@ -108,11 +113,6 @@ class Sequential:
   def summary(self):
     '''
       Fungsi yang mencetak summary dari aristektur neural network meliputi output shape dan jumlah parameter dari masing-masing layer
-
-      Parameters:
-
-      Return:
-        
     '''
     print ("{:<30} {:<30} {:<30}".format('Layer (type)','Output Shape','Param #'))
     #iterate all layers
@@ -121,15 +121,7 @@ class Sequential:
       weightTemp = 0
       if (type(self.layers[i]) is Dense):
         weightTemp = self.layers[i].weight.shape[0] * self.layers[i].weight.shape[1]
-      # elif (type(self.layers[i]) is Conv):
-      #   #Get all kernel dimensions
-      #   kernel_dimensions=1
-      #   for j in range(len(self.layers[i].kernel_size)):
-      #     kernel_dimensions *= self.layers[i].kernel_size[j]
-      #   weightTemp = self.layers[i].filter * (self.layers[i-1].shape[1] * kernel_dimensions + 1) 
       elif (type(self.layers[i]) is LSTM):
-        #TODO
-        pass
         # (m+n+1)*4*n
         # n: unit LSTM
         # m: dimensi input
