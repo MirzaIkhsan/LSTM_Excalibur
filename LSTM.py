@@ -84,8 +84,10 @@ class LSTM:
             n_range=self.units * 1,
             shape=(self.units, 1)
         )
-    
-    def _generate_cells_per_timestep(self):
+
+        self._generate_cells()
+
+    def _generate_cells(self):
         self.cells = []
         for i in range(self.units):
             Ufi = self.Uf[i].reshape(1, self.Uf[i].shape[0])
@@ -122,21 +124,15 @@ class LSTM:
             .reshape(shape)
 
     def process_timestep(self, data):
-        #iterasi per units -> dapetin h_prev dan cell state    
+        #iterasi per units -> dapetin h_prev dan cell state  
         for i in range(self.input_shape[0]):
-            cell_state = []
-            hidden = []
             output_value = []
-            self._generate_cells_per_timestep()
             xi = data[i].reshape(1,data[i].shape[0])
             for j in range(self.units):
-                cell_state.append(self.cells[j].calculate_cell(xi)[0][0]) #[0][0] karena hasilnya kan dalam shape (1,1) jadi ambil valuenya     caranya gini
-                hidden.append(self.cells[j].calculate_hidden(xi)[0][0])
-                output_value.append(self.cells[j].calculate_output(xi)[0][0])
+                self.cells[j].calculate_cell(xi) 
+                self.cells[j].calculate_hidden(xi)
+                output_value.append(self.cells[j].calculate_output(xi)[0][0]) #[0][0] karena hasilnya kan dalam shape (1,1) jadi ambil valuenya     caranya gini
 
-            #update h_prev dan cell state, masukin output ke atribut
-            self.prev_cell_state = np.array(cell_state).reshape(self.units, 1)
-            self.prev_hidden_state = np.array(hidden).reshape(self.units, 1)
             self.output_value = np.array(output_value).reshape(self.units, 1)
 
             # print("======Prev cell state========")
