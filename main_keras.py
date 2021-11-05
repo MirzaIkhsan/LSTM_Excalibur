@@ -31,3 +31,5 @@ model.add(LSTM(10, input_shape=(32,6))) #LSTM layer with 10 neurons
 model.add(Dense(6, activation='linear')) #Dense output layer with 1 neuron, linear activation
 
 print(model.predict(X[:1]))
+
+model.summary()
